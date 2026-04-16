@@ -46,13 +46,13 @@ class WeatherRepositoryImpl implements WeatherRepository {
         await localDataSource.cacheForecast(remoteForecast as dynamic);
         
         return Right(remoteForecast);
-      } on ServerException {
-        // If the API throws 500s or 404s, failover seamlessly gracefully to cached db.
+      } on ServerException catch (e) {
+        // If the API throws 500s or 404s, attempt to failover to cached db but pass the Server error upwards.
         try {
           final localData = await localDataSource.getLastSavedForecast();
-          return Right(localData);
+          return Left(ServerFailure(e.message ?? "Server error occurred", localData));
         } on CacheException {
-           return const Left(ServerFailure());
+          return Left(ServerFailure(e.message ?? "Server error occurred"));
         }
       } catch (e) {
          return const Left(ServerFailure());

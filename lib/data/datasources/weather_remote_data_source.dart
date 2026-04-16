@@ -8,6 +8,14 @@ abstract class WeatherRemoteDataSource {
   Future<WeatherForecastModel> getForecast(String city);
 }
 
+/// **WeatherRemoteDataSourceImpl**
+/// Manages the network requests out to OpenWeatherMap.
+///
+/// Handover Notes:
+/// - `DioClient` provides an intercepted instance of `Dio` guaranteeing our 10-second timeout constraints natively.
+/// - We pull the `API_KEY` dynamically out of the `.env` here to ensure github safety.
+/// - The `metric` unit is hardcoded to enforce Celsius measurements. 
+/// - `DioException` timeouts route cleanly back out as `ServerException` to allow fallback triggers in the Repository layer.
 class WeatherRemoteDataSourceImpl implements WeatherRemoteDataSource {
   final DioClient dioClient;
 
@@ -36,8 +44,15 @@ class WeatherRemoteDataSourceImpl implements WeatherRemoteDataSource {
       if (e is DioException) {
         if (e.type == DioExceptionType.connectionTimeout || 
             e.type == DioExceptionType.receiveTimeout) {
-          // You could throw a specific TimeoutException here if desired
-          throw ServerException(); 
+          throw ServerException('Connection timeout'); 
+        }
+        
+        // Extract exact dynamic error message from API (e.g. {"cod":"404","message":"city not found"})
+        if (e.response?.data != null && e.response?.data is Map<String, dynamic>) {
+          final message = e.response?.data['message'] as String?;
+          if (message != null) {
+            throw ServerException(message);
+          }
         }
       }
       throw ServerException();

@@ -5,6 +5,14 @@ import '../../../core/network/network_info.dart';
 import '../../../domain/usecases/get_forecast_usecase.dart';
 import 'weather_state.dart';
 
+/// **WeatherCubit**
+/// The View-Model structure powering the Presentation layer.
+/// 
+/// Handover Notes:
+/// - Maps structural interactions originating from the UI into Domain UseCase triggers.
+/// - Stores a debouncing `Timer` resolving API over-fetching. A user typing 'London' bounds to 1 Call.
+/// - Converts `fpdart`'s `Failure` maps rigidly to `WeatherError(message)` states seamlessly ensuring 
+///   the `HomePage` uses simple `if (state is WeatherError)` checking.
 class WeatherCubit extends Cubit<WeatherState> {
   final GetForecastUseCase getForecastUseCase;
   final NetworkInfo networkInfo;
@@ -35,7 +43,17 @@ class WeatherCubit extends Cubit<WeatherState> {
     final isConnected = await networkInfo.isConnected;
 
     failureOrWeather.fold(
-      (failure) => emit(WeatherError(message: _mapFailureToMessage(failure))),
+      (failure) {
+        if (failure is ServerFailure && failure.fallbackData != null) {
+          emit(WeatherLoaded(
+            forecast: failure.fallbackData!,
+            isOffline: !isConnected,
+            errorMessage: failure.message,
+          ));
+        } else {
+          emit(WeatherError(message: _mapFailureToMessage(failure)));
+        }
+      },
       (forecast) => emit(WeatherLoaded(
         forecast: forecast,
         isOffline: !isConnected, 

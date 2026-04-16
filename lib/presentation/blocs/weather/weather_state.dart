@@ -15,14 +15,16 @@ class WeatherLoading extends WeatherState {}
 class WeatherLoaded extends WeatherState {
   final WeatherForecast forecast;
   final bool isOffline;
+  final String? errorMessage;
 
   const WeatherLoaded({
     required this.forecast,
     this.isOffline = false,
+    this.errorMessage,
   });
 
   @override
-  List<Object?> get props => [forecast, isOffline];
+  List<Object?> get props => [forecast, isOffline, errorMessage];
 }
 
 class WeatherError extends WeatherState {

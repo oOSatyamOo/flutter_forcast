@@ -10,6 +10,14 @@ abstract class WeatherLocalDataSource {
   Future<void> cacheForecast(WeatherForecastModel forecastToCache);
 }
 
+/// **WeatherLocalDataSourceImpl**
+/// Manages all SQLite interactions representing the offline cache. 
+/// 
+/// Handover Notes:
+/// - Uses `sqflite` alongside `path_provider` to securely map database architectures.
+/// - We pull the `DB_NAME` via `flutter_dotenv` to ensure configuration isn't hardcoded.
+/// - Architecture caches the *entire* serialized JSON response, maintaining schema symmetry 
+///   with Remote models so parsing logic is unified using `toJsonWrapper()`.
 class WeatherLocalDataSourceImpl implements WeatherLocalDataSource {
   static Database? _database;
   static const String tableName = 'weather_cache';

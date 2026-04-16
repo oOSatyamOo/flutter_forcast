@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import '../../domain/entities/weather_forecast.dart';
+
 abstract class Failure extends Equatable {
   final String message;
 
@@ -10,7 +12,11 @@ abstract class Failure extends Equatable {
 }
 
 class ServerFailure extends Failure {
-  const ServerFailure([super.message = "Server error occurred"]);
+  final WeatherForecast? fallbackData;
+  const ServerFailure([super.message = "Server error occurred", this.fallbackData]);
+
+  @override
+  List<Object?> get props => [message, fallbackData];
 }
 
 class CacheFailure extends Failure {

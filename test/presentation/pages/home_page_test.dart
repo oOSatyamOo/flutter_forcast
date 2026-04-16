@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:skycast/core/widgets/common_widgets.dart' show DailyCardWidget;
 import 'package:skycast/domain/entities/city.dart';
 import 'package:skycast/domain/entities/weather_forecast.dart';
 import 'package:skycast/presentation/blocs/weather/weather_cubit.dart';
