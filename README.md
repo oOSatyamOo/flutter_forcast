@@ -9,6 +9,33 @@ A production-grade, beautifully animated weather forecasting application built u
 - **Lottie Integrations**: Fluid loading UI animations intercepting heavy backend delays.
 - **Dynamic Testing Matrix**: Heavily covered via pure Dart Unit tests, localized Widget bounding tests, and `integration_test` E2E suites.
 
+
+
+## 📱 Screenshots
+<div align="center">
+  <table border="0">
+    <tr>
+      <td width="48%" align="center" valign="top">
+          <img src="https://github.com/user-attachments/assets/ec37bf41-17a5-4c84-8c0b-7f80633f297f" width="100%" />
+        </a>
+        <br><br>
+        <a href="https://github.com/oOSatyamOo/GitHub-Language-Stats">
+          <img src="https://github.com/user-attachments/assets/2ca1415f-d31d-435d-98ed-65a259bb0fb5" width="100%" />
+        </a>
+      </td>
+       <td width="48%" align="center" valign="top">
+          <img src="https://github.com/user-attachments/assets/0ec34cce-3828-43a3-b155-3cb8eb0871dd" width="100%" />
+        </a>
+        <br><br>
+        <a href="https://github.com/oOSatyamOo/GitHub-Language-Stats">
+          <img src="https://github.com/user-attachments/assets/177bfc47-cd0b-48dc-af86-e7f045275e52" width="100%" />
+        </a>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
 ---
 
 ## 🏗️ Architecture
@@ -17,6 +44,80 @@ We strictly follow **Clean Architecture** combined with **SOLID principles**:
 2. **Domain**: The core bounds. Encompasses Enterprise `Entities`, specific `UseCases`, and isolated Interface contracts. The domain depends on absolutely *nothing* implicitly outside itself.
 3. **Data**: Isolates `Repositories` pulling interfaces together. Coordinates routing fetches natively towards endpoints (Dio) or local database caching sources (`sqflite`).
 
+```
+flutter_forcast/
+    ├── assets/
+    │   ├── showSearchWaiting.json
+    ├── lib/
+    │   ├── core/
+    │   │   ├── di/
+    │   │   │   ├── injection_container.dart
+    │   │   ├── error/
+    │   │   │   ├── exceptions.dart
+    │   │   │   ├── failures.dart
+    │   │   ├── network/
+    │   │   │   ├── dio_client.dart
+    │   │   │   ├── network_info.dart
+    │   │   ├── theme/
+    │   │   │   ├── app_theme.dart
+    │   │   ├── utils/
+    │   │   │   ├── lottie_assets.dart
+    │   │   ├── widgets/
+    │   │   │   ├── common_widgets.dart
+    │   ├── data/
+    │   │   ├── datasources/
+    │   │   │   ├── weather_local_data_source.dart
+    │   │   │   ├── weather_remote_data_source.dart
+    │   │   ├── models/
+    │   │   │   ├── city_model.dart
+    │   │   │   ├── weather_forecast_model.dart
+    │   │   ├── repositories/
+    │   │   │   ├── weather_repository_impl.dart
+    │   ├── domain/
+    │   │   ├── entities/
+    │   │   │   ├── city.dart
+    │   │   │   ├── weather_forecast.dart
+    │   │   ├── repositories/
+    │   │   │   ├── weather_repository.dart
+    │   │   ├── usecases/
+    │   │   │   ├── get_forecast_usecase.dart
+    │   ├── presentation/
+    │   │   ├── blocs/
+    │   │   │   ├── weather/
+    │   │   │   │   ├── weather_cubit.dart
+    │   │   │   │   ├── weather_state.dart
+    │   │   ├── pages/
+    │   │   │   ├── details_page.dart
+    │   │   │   ├── home_page.dart
+    │   ├── main.dart
+    ├── test/
+    │   ├── core/
+    │   │   ├── network/
+    │   │   │   ├── network_info_test.dart
+    │   ├── data/
+    │   │   ├── models/
+    │   │   │   ├── city_model_test.dart
+    │   ├── domain/
+    │   │   ├── usecases/
+    │   │   │   ├── get_forecast_usecase_test.dart
+    │   ├── integration_test/
+    │   │   ├── app_test.dart
+    │   ├── presentation/
+    │   │   ├── blocs/
+    │   │   │   ├── weather_cubit_test.dart
+    │   │   ├── pages/
+    │   │   │   ├── home_page_test.dart
+    │   ├── widget_test.dart
+    ├── .gitignore
+    ├── AI_LOG.md
+    ├── analysis_options.yaml
+    ├── ARCHITECTURE.md
+    ├── LICENSE
+    ├── pubspec.yaml
+    ├── README.md
+    ├── REVIEW_LOG.md
+    └── skycast.iml
+```
 ---
 
 ## 🛠️ Technology Stack
@@ -38,15 +139,19 @@ Ensure your environment is set up.
 *   Flutter version **3.41.6** or higher.
 *   Dart version **3.11.4** or higher.
 
-### 2. Environment Configuration
-For security, API Keys are explicitly omitted from this Github.
-1. Create a `.env` file at the root of the project directory.
-2. Add your OpenWeatherMap credentials mapping exactly as below:
-```env
-API_KEY=your_openweathermap_api_key_here
-BASE_URL=https://api.openweathermap.org/data/2.5
-DB_NAME=weather.db
-```
+## 🚀 How to Run the Project
+
+### Prerequisites
+- Android Studio Meerkat | Ladybug | or newer
+- Minimum SDK: 24 (Android 7.0)
+- An API key from [OpenWeatherMap](https://openweathermap.org/api)
+- add API KEY in .env file where your pubspec.ymal is at the root 
+   ```
+   API_KEY=KEY
+  BASE_URL=https://api.openweathermap.org/data/2.5
+  DB_NAME=YOUR_DB_NAME
+   ```
+
 
 ### 3. Build & Run
 From the root of the repository, execute:
