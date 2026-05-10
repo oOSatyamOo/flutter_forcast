@@ -7,6 +7,7 @@ import 'package:skycast/core/widgets/common_widgets.dart'
 import '../../core/utils/lottie_assets.dart';
 import '../blocs/weather/weather_cubit.dart';
 import '../blocs/weather/weather_state.dart';
+import '../widgets/error_retry.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -73,15 +74,15 @@ class _HomePageState extends State<HomePage> {
               child: Lottie.asset(LottieAsset.showSearchWaiting, width: 120),
             );
           } else if (state is WeatherError) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  state.message,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.red, fontSize: 16),
-                ),
-              ),
+            return ErrorRetry(
+              message: state.message,
+              onRetry: () {
+                // Re-fire the last search query or fall back to the default city.
+                final query = _searchController.text.isNotEmpty
+                    ? _searchController.text
+                    : 'London';
+                context.read<WeatherCubit>().getForecastForCity(query);
+              },
             );
           } else if (state is WeatherLoaded) {
             final forecast = state.forecast;
