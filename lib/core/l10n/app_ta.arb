@@ -1,0 +1,41 @@
+{
+  "@@locale": "ta",
+  "appName": "SkyCast",
+  "searchHint": "நகரத்தை தேடுங்கள்...",
+  "threeDayForecast": "3-நாள் முன்னறிவிப்பு",
+  "hourlyForecast": "மணிநேர முன்னறிவிப்பு",
+  "dailyOverview": "தினசரி கண்ணோட்டம்",
+  "searchForCity": "ஒரு நகரத்தை தேடுங்கள்",
+  "offlineMessage": "நீங்கள் ஆஃப்லைனில் இருக்கிறீர்கள். தற்காலிக தரவை காட்டுகிறோம்.",
+  "apiErrorMessage": "API பிழை: {message}. தற்காலிக தரவை காட்டுகிறோம்.",
+  "@apiErrorMessage": {
+    "placeholders": {
+      "message": {"type": "String"}
+    }
+  },
+  "tryAgain": "மீண்டும் முயற்சிக்கவும்",
+  "settings": "அமைப்புகள்",
+  "theme": "தீம்",
+  "language": "மொழி",
+  "themeLight": "வெளிச்சம்",
+  "themeDark": "இருள்",
+  "themeSystem": "கணினி",
+  "maxTemp": "அதிகபட்ச வெப்பம்",
+  "minTemp": "குறைந்தபட்ச வெப்பம்",
+  "condition": "நிலை",
+  "goHome": "முகப்பிற்கு செல்லவும்",
+  "pageNotFound": "பக்கம் கிடைக்கவில்லை: {path}",
+  "@pageNotFound": {
+    "placeholders": {
+      "path": {"type": "String"}
+    }
+  },
+  "deepLinkMessage": "\"{city}\" என்பதற்கு இணைக்கப்பட்டீர்கள்.\nமுழு முன்னறிவிப்பை பார்க்க முகப்பு திரையில் தேடுங்கள்.",
+  "@deepLinkMessage": {
+    "placeholders": {
+      "city": {"type": "String"}
+    }
+  },
+  "deepLinkMessageEmpty": "முழு முன்னறிவிப்பை பார்க்க முகப்பு திரையில் ஒரு நகரத்தை தேடுங்கள்."
+
+}

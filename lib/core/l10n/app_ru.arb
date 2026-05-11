@@ -1,0 +1,40 @@
+{
+  "@@locale": "ru",
+  "appName": "SkyCast",
+  "searchHint": "Поиск города...",
+  "threeDayForecast": "Прогноз на 3 дня",
+  "hourlyForecast": "Почасовой прогноз",
+  "dailyOverview": "Дневной обзор",
+  "searchForCity": "Найдите город",
+  "offlineMessage": "Вы офлайн. Показаны кэшированные данные.",
+  "apiErrorMessage": "Ошибка API: {message}. Показаны кэшированные данные.",
+  "@apiErrorMessage": {
+    "placeholders": {
+      "message": {"type": "String"}
+    }
+  },
+  "tryAgain": "Повторить",
+  "settings": "Настройки",
+  "theme": "Тема",
+  "language": "Язык",
+  "themeLight": "Светлая",
+  "themeDark": "Тёмная",
+  "themeSystem": "Системная",
+  "maxTemp": "Макс. темп.",
+  "minTemp": "Мин. темп.",
+  "condition": "Погода",
+  "goHome": "На главную",
+  "pageNotFound": "Страница не найдена: {path}",
+  "@pageNotFound": {
+    "placeholders": {
+      "path": {"type": "String"}
+    }
+  },
+  "deepLinkMessage": "Вы перешли по ссылке на \"{city}\".\nИщите на главном экране для просмотра прогноза.",
+  "@deepLinkMessage": {
+    "placeholders": {
+      "city": {"type": "String"}
+    }
+  },
+  "deepLinkMessageEmpty": "Найдите город на главном экране для просмотра прогноза."
+}

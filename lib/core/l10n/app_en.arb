@@ -1,0 +1,40 @@
+{
+  "@@locale": "en",
+  "appName": "SkyCast",
+  "searchHint": "Search city...",
+  "threeDayForecast": "3-Day Forecast",
+  "hourlyForecast": "Hourly Forecast",
+  "dailyOverview": "Daily Overview",
+  "searchForCity": "Search for a city",
+  "offlineMessage": "You are offline. Showing cached data.",
+  "apiErrorMessage": "API Error: {message}. Showing cached data.",
+  "@apiErrorMessage": {
+    "placeholders": {
+      "message": {"type": "String"}
+    }
+  },
+  "tryAgain": "Try Again",
+  "settings": "Settings",
+  "theme": "Theme",
+  "language": "Language",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "themeSystem": "System",
+  "maxTemp": "Max Temp",
+  "minTemp": "Min Temp",
+  "condition": "Condition",
+  "goHome": "Go to Home",
+  "pageNotFound": "Page not found: {path}",
+  "@pageNotFound": {
+    "placeholders": {
+      "path": {"type": "String"}
+    }
+  },
+  "deepLinkMessage": "You were linked to \"{city}\".\nSearch for it on the home screen to view the full forecast.",
+  "@deepLinkMessage": {
+    "placeholders": {
+      "city": {"type": "String"}
+    }
+  },
+  "deepLinkMessageEmpty": "Search for a city on the home screen to view the full forecast."
+}

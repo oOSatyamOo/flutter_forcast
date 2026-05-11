@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:skycast/core/widgets/common_widgets.dart'
-    show HeaderWidget, ErrorBanner, DailyCardWidget;
+    show HeaderWidget, ErrorBanner, DailyCardWidget, OfflineBanner;
 
+import '../../core/router/app_router.dart';
+import '../../core/utils/l10n_extension.dart';
 import '../../core/utils/lottie_assets.dart';
 import '../blocs/weather/weather_cubit.dart';
 import '../blocs/weather/weather_state.dart';
-import '../widgets/error_retry.dart';
+import '../../core/widgets/error_retry.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -35,21 +38,22 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
         title: _isSearching
             ? TextField(
                 controller: _searchController,
                 autofocus: true,
-                decoration: const InputDecoration(
-                  hintText: 'Search city...',
+                decoration: InputDecoration(
+                  hintText: l10n.searchHint,
                   border: InputBorder.none,
                 ),
                 onChanged: (val) {
                   context.read<WeatherCubit>().searchCityChanged(val);
                 },
               )
-            : const Text('SkyCast'),
+            : Text(l10n.appName),
         actions: [
           IconButton(
             icon: Icon(_isSearching ? Icons.close : Icons.search),
@@ -64,6 +68,10 @@ class _HomePageState extends State<HomePage> {
                 }
               });
             },
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () => context.push(AppRouter.settings),
           ),
         ],
       ),
@@ -103,9 +111,12 @@ class _HomePageState extends State<HomePage> {
                   if (errorMessage != null) ErrorBanner(message: errorMessage),
                   HeaderWidget(forecast: forecast),
                   const SizedBox(height: 24),
-                  const Text(
-                    '3-Day Forecast',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  Text(
+                    l10n.threeDayForecast,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 12),
                   ...forecast.dailyForecasts.map(
@@ -116,36 +127,8 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           }
-          return const Center(child: Text("Search for a city"));
+          return Center(child: Text(l10n.searchForCity));
         },
-      ),
-    );
-  }
-}
-
-class OfflineBanner extends StatelessWidget {
-  const OfflineBanner({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.orange.shade100,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: const Row(
-        children: [
-          Icon(Icons.wifi_off, color: Colors.orange),
-          SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              'You are offline. Showing cached data.',
-              style: TextStyle(color: Colors.deepOrange),
-            ),
-          ),
-        ],
       ),
     );
   }

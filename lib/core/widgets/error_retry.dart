@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import '../utils/l10n_extension.dart';
 import 'package:lottie/lottie.dart';
-
-import '../../core/utils/lottie_assets.dart';
+import '../utils/lottie_assets.dart';
 
 /// **ErrorRetry**
 /// A fully responsive, reusable error state widget following industry-standard UX patterns.
@@ -22,14 +22,14 @@ class ErrorRetry extends StatelessWidget {
   final String message;
   final VoidCallback onRetry;
 
-  /// Optional label for the retry button. Defaults to 'Try Again'.
-  final String retryLabel;
+  /// Optional label for the retry button. Defaults to localized 'Try Again'.
+  final String? retryLabel;
 
   const ErrorRetry({
     super.key,
     required this.message,
     required this.onRetry,
-    this.retryLabel = 'Try Again',
+    this.retryLabel,
   });
 
   @override
@@ -52,7 +52,10 @@ class ErrorRetry extends StatelessWidget {
           child: SingleChildScrollView(
             // Keeps the widget scrollable if the screen is very short (landscape phone)
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 24),
+              padding: EdgeInsets.symmetric(
+                horizontal: horizontalPadding,
+                vertical: 24,
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -89,7 +92,7 @@ class ErrorRetry extends StatelessWidget {
                       onPressed: onRetry,
                       icon: const Icon(Icons.refresh_rounded),
                       label: Text(
-                        retryLabel,
+                        retryLabel ?? context.l10n.tryAgain,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,

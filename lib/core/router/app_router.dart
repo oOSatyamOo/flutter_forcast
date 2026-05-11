@@ -1,38 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:skycast/presentation/pages/details_page.dart';
-import 'package:skycast/presentation/pages/home_page.dart';
 
 import '../../domain/entities/weather_forecast.dart';
+import '../../domain/repositories/app_session_repository.dart';
+import '../../core/utils/l10n_extension.dart';
+import '../di/injection_container.dart';
+import 'package:skycast/presentation/pages/details_page.dart';
+import 'package:skycast/presentation/pages/home_page.dart';
+import 'package:skycast/presentation/pages/settings_page.dart';
+import 'package:skycast/presentation/pages/splash_page.dart';
 
-/// **AppRouter**
-/// Centralizes all route configuration for the SkyCast application.
+/// **AppRouter** — Single source of truth for all route definitions.
 ///
-/// Handover Notes:
-/// - All routes are defined here following Clean Architecture's separation of concerns.
-/// - Deep links are supported via `urlPathStrategy` and the route `path` definitions.
-/// - The `/details` route accepts both `extra` (in-app navigation) and query parameters
-///   for deep linking scenarios where `extra` is not available.
-/// - Deep link examples:
-///   - Home:    skycast://open/
-///   - Details: skycast://open/details?city=London
+/// Routes:
+///   /splash    → SplashPage  (initial location — saves open_time)
+///   /          → HomePage
+///   /details   → DetailsPage (in-app) or DeepLinkDetailsPage (deep link)
+///   /settings  → SettingsPage
+///
+/// Deep links supported via `skycast://` custom URL scheme.
+/// Configure AndroidManifest.xml and Info.plist accordingly.
 class AppRouter {
-  AppRouter._(); // Private constructor — this is a utility class.
+  AppRouter._();
 
-  /// Route path constants — use these everywhere instead of raw strings.
-  static const String home = '/';
-  static const String details = '/details';
+  static const String splash   = '/splash';
+  static const String home     = '/';
+  static const String details  = '/details';
+  static const String settings = '/settings';
 
-  /// The single [GoRouter] instance for the whole app.
   static final GoRouter router = GoRouter(
     debugLogDiagnostics: true,
-
-    // --- Deep Link Configuration ---
-    // Ensure `android/app/src/main/AndroidManifest.xml` and
-    // `ios/Runner/Info.plist` are configured with the `skycast` URL scheme.
-    initialLocation: home,
-
+    initialLocation: splash,
     routes: [
+      GoRoute(
+        path: splash,
+        name: 'splash',
+        builder: (context, state) => SplashRouteWrapper(
+          repository: sl<AppSessionRepository>(),
+        ),
+      ),
       GoRoute(
         path: home,
         name: 'home',
@@ -42,27 +48,22 @@ class AppRouter {
         path: details,
         name: 'details',
         builder: (context, state) {
-          // In-app navigation passes the full DailyForecast object via `extra`.
-          // Deep links don't have `extra`, so we show a lightweight detail
-          // screen pre-populated with just the city name from query params.
           final city = state.uri.queryParameters['city'] ?? '';
-
           if (state.extra is DailyForecast) {
-            // Standard in-app navigation with full data
             return DetailsPage(
               dailyForecast: state.extra as DailyForecast,
               cityName: city,
             );
           }
-
-          // Deep link fallback — show DetailsPage with only city name.
-          // The page itself should handle a null/empty dailyForecast gracefully.
           return DeepLinkDetailsPage(cityName: city);
         },
       ),
+      GoRoute(
+        path: settings,
+        name: 'settings',
+        builder: (context, state) => const SettingsPage(),
+      ),
     ],
-
-    // Global error page for unresolved routes
     errorBuilder: (context, state) => Scaffold(
       body: Center(
         child: Text(
@@ -74,17 +75,15 @@ class AppRouter {
   );
 }
 
-/// **DeepLinkDetailsPage**
-/// A lightweight wrapper shown when the user arrives via a deep link to `/details?city=...`.
-/// Since deep links don't carry `DailyForecast` object data, we show a notice
-/// directing the user to search for the city from the home screen.
+/// Deep link fallback page shown when app is opened via `skycast:///details?city=X`
+/// without in-app DailyForecast object data available.
 class DeepLinkDetailsPage extends StatelessWidget {
   final String cityName;
-
   const DeepLinkDetailsPage({super.key, required this.cityName});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(title: Text(cityName.isNotEmpty ? cityName : 'SkyCast')),
       body: Center(
@@ -97,15 +96,15 @@ class DeepLinkDetailsPage extends StatelessWidget {
               const SizedBox(height: 16),
               Text(
                 cityName.isNotEmpty
-                    ? 'You were linked to "$cityName".\nSearch for it on the home screen to view the full forecast.'
-                    : 'Search for a city on the home screen to view the full forecast.',
+                    ? l10n.deepLinkMessage(cityName)
+                    : l10n.deepLinkMessageEmpty,
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 24),
               ElevatedButton.icon(
                 icon: const Icon(Icons.home),
-                label: const Text('Go to Home'),
+                label: Text(l10n.goHome),
                 onPressed: () => context.go(AppRouter.home),
               ),
             ],

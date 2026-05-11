@@ -1,0 +1,40 @@
+{
+  "@@locale": "hi",
+  "appName": "आसमान",
+  "searchHint": "शहर खोजें...",
+  "threeDayForecast": "3 दिन का पूर्वानुमान",
+  "hourlyForecast": "प्रति घंटा पूर्वानुमान",
+  "dailyOverview": "दैनिक अवलोकन",
+  "searchForCity": "एक शहर खोजें",
+  "offlineMessage": "आप ऑफलाइन हैं। कैश्ड डेटा दिखा रहे हैं।",
+  "apiErrorMessage": "API त्रुटि: {message}। कैश्ड डेटा दिखा रहे हैं।",
+  "@apiErrorMessage": {
+    "placeholders": {
+      "message": {"type": "String"}
+    }
+  },
+  "tryAgain": "पुनः प्रयास करें",
+  "settings": "सेटिंग्स",
+  "theme": "थीम",
+  "language": "भाषा",
+  "themeLight": "लाइट",
+  "themeDark": "डार्क",
+  "themeSystem": "सिस्टम",
+  "maxTemp": "अधिकतम तापमान",
+  "minTemp": "न्यूनतम तापमान",
+  "condition": "स्थिति",
+  "goHome": "होम पर जाएं",
+  "pageNotFound": "पृष्ठ नहीं मिला: {path}",
+  "@pageNotFound": {
+    "placeholders": {
+      "path": {"type": "String"}
+    }
+  },
+  "deepLinkMessage": "आपको \"{city}\" से लिंक किया गया था।\nपूरा पूर्वानुमान देखने के लिए होम स्क्रीन पर खोजें।",
+  "@deepLinkMessage": {
+    "placeholders": {
+      "city": {"type": "String"}
+    }
+  },
+  "deepLinkMessageEmpty": "पूरा पूर्वानुमान देखने के लिए होम स्क्रीन पर एक शहर खोजें।"
+}

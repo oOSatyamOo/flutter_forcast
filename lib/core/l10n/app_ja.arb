@@ -1,0 +1,40 @@
+{
+  "@@locale": "ja",
+  "appName": "SkyCast",
+  "searchHint": "都市を検索...",
+  "threeDayForecast": "3日間の予報",
+  "hourlyForecast": "時間別予報",
+  "dailyOverview": "日次概要",
+  "searchForCity": "都市を検索してください",
+  "offlineMessage": "オフラインです。キャッシュデータを表示しています。",
+  "apiErrorMessage": "APIエラー: {message}。キャッシュデータを表示しています。",
+  "@apiErrorMessage": {
+    "placeholders": {
+      "message": {"type": "String"}
+    }
+  },
+  "tryAgain": "もう一度試す",
+  "settings": "設定",
+  "theme": "テーマ",
+  "language": "言語",
+  "themeLight": "ライト",
+  "themeDark": "ダーク",
+  "themeSystem": "システム",
+  "maxTemp": "最高気温",
+  "minTemp": "最低気温",
+  "condition": "天気",
+  "goHome": "ホームへ",
+  "pageNotFound": "ページが見つかりません: {path}",
+  "@pageNotFound": {
+    "placeholders": {
+      "path": {"type": "String"}
+    }
+  },
+  "deepLinkMessage": "\"{city}\" にリンクされました。\nホーム画面で検索して完全な予報をご確認ください。",
+  "@deepLinkMessage": {
+    "placeholders": {
+      "city": {"type": "String"}
+    }
+  },
+  "deepLinkMessageEmpty": "ホーム画面で都市を検索して完全な予報をご確認ください。"
+}

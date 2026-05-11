@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
+import 'package:skycast/core/utils/l10n_extension.dart';
 import 'package:skycast/core/utils/lottie_assets.dart';
 import 'package:skycast/domain/entities/weather_forecast.dart';
 
@@ -26,7 +27,7 @@ class ErrorBanner extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'API Error: $message. Showing cached data.',
+              context.l10n.apiErrorMessage(message),
               style: const TextStyle(color: Colors.red),
             ),
           ),
@@ -123,6 +124,34 @@ class DailyCardWidget extends StatelessWidget {
           '${day.minTemp.round()}° / ${day.maxTemp.round()}°',
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
+      ),
+    );
+  }
+}
+
+class OfflineBanner extends StatelessWidget {
+  const OfflineBanner({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.orange.shade100,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.wifi_off, color: Colors.orange),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              context.l10n.offlineMessage,
+              style: const TextStyle(color: Colors.deepOrange),
+            ),
+          ),
+        ],
       ),
     );
   }

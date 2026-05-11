@@ -180,3 +180,44 @@ flutter test integration_test/app_test.dart
 ---
 
 *Documentation explicitly prepared for developer handovers. Review specific subsystem logic within the inline class comments.*
+
+
+Adding a new localization message is a straightforward process thanks to the .arb (Application Resource Bundle) architecture we set up. Here are the steps:
+
+1. Add the string to the base English file
+Open your primary template file, which is lib/l10n/app_en.arb. Add your new key and string at the bottom (make sure to format it as proper JSON).
+
+json
+"myNewMessage": "This is a new message!"
+If you need variables/placeholders: You define the string with {variableName} and then add an @ metadata object underneath it to define the type.
+
+json
+"welcomeUser": "Welcome, {name}!",
+  "@welcomeUser": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  }
+2. Add the translations to the other locale files
+Open the remaining translation files:
+
+app_hi.arb (Hindi)
+app_ta.arb (Tamil)
+app_ru.arb (Russian)
+app_ja.arb (Japanese)
+Add the exact same key (myNewMessage) but with the translated text. If you forget to add the key to one of these files, Flutter will throw a build error, which is a great safety net!
+
+3. Generate the Dart code
+Once you save the .arb files, Flutter needs to regenerate the AppLocalizations Dart class so your code knows the new string exists. Run this command in your terminal:
+
+bash
+flutter gen-l10n
+(Note: If you are actively running the app, sometimes just hitting save or running flutter pub get will trigger the code generation automatically depending on your IDE).
+
+4. Use it in your UI
+Now you can safely access your new localized string from any widget's build method using the context extension we created:
+
+dart
+Text(context.l10n.myNewMessage)
+// Or if it has placeholders:
+Text(context.l10n.welcomeUser('Satyam'))
